@@ -9,7 +9,7 @@
 @section('content')
     <div class="container">
         <h1>Cadastro de Currículo</h1>
-        <form action="{{ route('curriculo.store') }}" method="POST" target="_blank">
+        <form action="{{ route('curriculo.store') }}" method="POST" enctype="multipart/form-data" target="_blank">
             @csrf
 
             <div class="mb-3">
@@ -38,6 +38,11 @@
                 <label for="estado" class="form-label">Estado</label>
                 <input type="hidden" id="estado" name="estado" class="form-control">
                 <input type="text" id="estado_input" name="estado_input" class="form-control" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label for="pais" class="form-label">País</label>
+                <input type="text" id="pais" name="pais" class="form-control" required>
             </div>
 
             <div class="mb-3">
@@ -81,7 +86,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="habilidades" class="form-label">Habilidades</label>
+                <label for="habilidades" class="form-label">Habilidades (separe por virgulas)</label>
                 <textarea id="habilidades" name="habilidades" class="form-control" rows="3" placeholder="Liste suas habilidades" required></textarea>
             </div>
 
@@ -93,8 +98,6 @@
             <button type="submit" class="btn btn-primary">Enviar Currículo</button>
         </form>
     </div>
-
-    <div>footer</div>
 
     <script>
         document.getElementById('cep').addEventListener('blur', async function () {

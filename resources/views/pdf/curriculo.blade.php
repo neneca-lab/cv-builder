@@ -88,7 +88,7 @@
     </div>
 
     <div class="localizacao">
-        <p>{{ $data['cidade'] }} - {{ $data['estado'] }}</p>
+        <p>{{ $data['cidade'] }} - {{ $data['estado']  }}, {{ $data['pais'] }}</p>
     </div>
 
     <div class="contact">
