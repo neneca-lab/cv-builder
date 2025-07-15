@@ -5,16 +5,14 @@ use App\Services\AzureBlobService;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
+use App\Models\PdfModel;
 
 
-class CurriculoController extends Controller
-{
-    public function create()
-    {
-        return view('welcome');
-    }
+class CurriculoController extends Controller {
 
-    public function store(Request $request, AzureBlobService $azureBlobService)
+
+
+    public function store(Request $request)
     {
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -39,14 +37,14 @@ class CurriculoController extends Controller
         $pdf = Pdf::loadView('pdf.curriculo', compact('data'))->setPaper('a4', 'portrait');
 
         $fileName = Str::slug($request->nome) . '-' . time() . '.pdf';
-        $tempPath = storage_path('app/public/' . $fileName);
+        $tempPath = storage_path('app/public/documentos/' . $fileName);
+
+
         $pdf->save($tempPath);
 
-        $azureUrl = $azureBlobService->uploadFile($tempPath, $fileName);
+        PdfModel::create(['arquivo' => $fileName]);
 
-//        dd($azureUrl);
-        unlink($tempPath);
 
-        return redirect()->back()->with('success', 'foi essa porra' . $azureUrl);
+        return redirect()->route('init');
     }
 }
